@@ -20,21 +20,46 @@ public class Main {
     public static void solve(String text, int weight) {
         String[] arrOfParagraph = text.split("\n");
         String[] arrOfWords = text.split("[. ]");
-        System.out.println(Arrays.toString(arrOfWords));
+        System.out.println(("--------------------------------------------------------------------------"));
         StringBuilder sb = new StringBuilder();
         int redString = 6;
         int space = 1;
 
         for (int i = 0; i < arrOfParagraph.length; i++) {
-            String[] arrOfWords1 = arrOfParagraph[i].split("[. ]");
+            String[] arrOfWords1 = arrOfParagraph[i].split(" ");
             int quantityOfSymbols = 6;
             int quantityOfWords = 0;
             int quantityOfSymbolsInEachParagraph = arrOfParagraph[i].length();
             if(arrOfParagraph[i].length() > weight) {
-                for (int j = 0; quantityOfSymbols < weight - arrOfWords1[arrOfWords1.length - 1].length(); j++) {
+                sb.append("      ");
+                for (int j = 0; quantityOfSymbols < weight && j < arrOfWords1.length; j++) {//проблема здесь от квантити до вейт (должно быть меньше из-за последнего слова проблемы)
+                    //if(quantityOfSymbols + arrOfWords1[arrOfWords1.length - 1].length() > weight)break;
                     quantityOfSymbols += arrOfWords1[j].length() + 1; //подсчет кол-ва символов для каждой строки включая красную строку (ее пишем как 6 пробелов)
                     quantityOfWords++;
+                    sb.append(arrOfWords1[j]).append(" ");
+                    if(j + 1 < arrOfWords1.length) {
+                        if (quantityOfSymbols + arrOfWords1[j + 1].length() > weight) {
+                            quantityOfSymbols = 0;
+                            quantityOfWords = 0;
+                            sb.append("\n");
+                        }
+                    }
+
+
                 }
+                //sb.append("\n");
+                int counter = 0;
+//                for(int k = quantityOfWords; k < arrOfWords1.length; k++){
+//                    counter++;
+//                    if(counter <= quantityOfWords) {
+//                        sb.append(arrOfWords1[k]).append(" ");
+//                    }
+//                    else {
+//                        counter = 0;
+//                        sb.append("\n");
+//                    }
+//                }
+                sb.append("\n");
             }
             else{
                 sb.append("      ").append(arrOfParagraph[i]).append("\n");
